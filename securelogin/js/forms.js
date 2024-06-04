@@ -23,7 +23,7 @@ function regformhash(form, uid, email, password, conf){
             alert('You must provide all the request details.please try again');
             return false;
         }
-}
+
 //Verifica o nome de usuario 
 
 re = /^\w+$/;
@@ -42,8 +42,8 @@ if (!re.test(form.username.value)) {
 
 if(password.value.length < 6){
     alert('passwords must contain at least one number, one lowercase and one uppercase letter. Please try again');
-
-    reurn false;
+     form.password.focus();
+    return false;
 
 }
 
@@ -51,4 +51,38 @@ if(password.value.length < 6){
 //pelo menos 6 caracteres
 
 var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
-if
+
+if(!re.test(password.value)){
+    alert('passwords must contain at least one number,one lowercase and one uppercase latter. please try again');
+    return false;
+}
+
+//verificar se a senha e a confirmação são as mesmaas 
+
+if(password.value !=confg.value){
+    alert('your password and confirmation do not match.please try again');
+    form.password.focus();
+    return false 
+}
+ 
+//crie um novo elemento de input,o qual será o campo para a senha com hash.
+
+var p = document.createElement("input");
+
+//adicione o novo elemento ao nosso formulario 
+
+form.appendChild(p);
+p.name ="p";
+p.type = "hidden";
+p.value = hex_shsa512(password.value);
+
+//cuidado para não deixar que a senha em texto simles não seja enviados 
+
+password.value = "";
+conf.value = "";
+
+//finalizando o formulario
+
+form.submit();
+return true 
+}
