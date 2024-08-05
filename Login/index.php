@@ -21,4 +21,4 @@ if (!isset($_SESSION["usuario"]) || !isset($_SESSION["senha"])) {
 <h3> logado. <a href="logout.php">Logout</a><h3>
     
 </body>
-</html> 
+</html>  

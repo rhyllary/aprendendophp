@@ -31,6 +31,12 @@ sec_session_start();
 </head>
 <body>
 
+<?php
+if (isset($_GET['error'])){
+  echo '<p classs="error"> errro ao fazer o ligin!</p>';
+}
+?>
+
 <form action="includes/process_login.php" method="post" name="login_form">
 
 email: <input type="text" name="email"/>
@@ -44,11 +50,4 @@ password: <input type="password" name="password" id="password"/>
 <p>you are currently logged<?php echo $logged ?>.</p>
 </body>
 </html>
-
-<?php
-if($isset($_GET['error'])){
-
-    echo '<P class="error">erro ao fazer o login!</p>';
-}
-?>
 
