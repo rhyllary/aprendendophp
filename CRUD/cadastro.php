@@ -96,5 +96,77 @@ if(isset($secesso))
     } 
     ?>
     </table>  
+    <?
+    $obj_msqli = new mysqli("127.0.0.1","root","", "tutocrudphp.");
+if ($obj_mysqli ->connect_errno)
+{
+    echo "ocorreu um erri na conexão ,com o banco de dados.";
+    exit;
+}
+ mysqli_set_charset($obj_mysqli, 'utf8'); 
+ //incluimos um codigo aqui
+$id = -1;
+$nome = "";
+$email = "";
+$cidade ="";
+$uf = "";
+
+// validanddo a existencia dos dados m
+if (isset($_post["nome"]) && isset($_post["email"]) && isset($_post["cidade"])
+&& isset($_post["uf"]))
+{
+    if(empty($_post["nome"]))
+    $erro = "campo nome obrigatório";
+else
+if(empaty($_post["email"]))
+$erro = "campo e-mail obrigatorio";
+ 
+
+else{
+
+    $id    = $_POST["id"];
+    $nome  = $_POST["nome"];
+    $email = $_POST["email"];
+    $cidade = $_POST["cidade"];
+    $uf    = $_POST["uf"];
+
+    if($id == -1)
+    {
+$stmt = $obj_mysqli-> prepare("INSERT INTO `cliente` (`nome` , ` email` , `cidade`, `uf`) VALUES (?,?,?,)"
+    );
+
+$stmt ->bind_param('ssss' , $nome, $email, $cidade, $uf);
+if(!$stmt->execute())
+{
+    $error = $stmt->error;
+}
+else
+{
+    header("location:cadastro.php");
+    exit;
+}
+    }
+    else 
+    if(is_numeric(id) && $sid >= 1)
+    {
+$stmt = $obj_mysqli->prepare("UPDATE `cliente` SET `nome`=?, `email`=?, `cidade`=?, `uf`=? WHERE id = ? ");
+$stmt ->brind_param('ssss', $nome , $email, $cidade , $uf, $id);
+
+if (!$stmt ->execute())
+{
+    $error = $stmt->error;
+}
+else
+{
+    header("location:cadastro.php");
+    exit;
+}
+
+}
+ 
+$error = "numero inválido";
+}
+}
+
 </body>
 </html>
