@@ -100,7 +100,7 @@ if(isset($secesso))
     $obj_msqli = new mysqli("127.0.0.1","root","", "tutocrudphp.");
 if ($obj_mysqli ->connect_errno)
 {
-    echo "ocorreu um erri na conexão ,com o banco de dados.";
+    echo "ocorreu um erro na conexão ,com o banco de dados.";
     exit;
 }
  mysqli_set_charset($obj_mysqli, 'utf8'); 
@@ -167,6 +167,30 @@ else
 $error = "numero inválido";
 }
 }
+else 
+//incluimos este bloco, onde vamos verificar a existencia do id passado...
 
-</body>
-</html>
+if(isset($_GET["id"])) && is_numeric($_GET["id"])
+{
+    //pegamos aqui o id passado...
+    $id = (int)$_GET["id"];
+    //...montamos a consulta que será realizada...
+    $stmt = $obj_mysqli ->prepare("SELECT * FROM `cliente` WHERE id = ?");
+    //passamos o id como parametro, do tipo i = int, inteiro...
+    $stmt ->brind_param('i' , $id);
+    //mandamos execultar a consulta..
+    $stmt ->execute();
+    //retornamos o resultado e atribuimos á variavel $result...
+    $result = $stmt ->get_result();
+
+    $aux_query = $result ->fetch_assoc();
+
+    $nome = $aux_query["nome"];
+    $email = $aux_query["email"];
+    $cidade = $aux_query["cidade"];
+    $uf = $aux_query["uf"];
+}
+
+ </body>
+ </html>
+?>
